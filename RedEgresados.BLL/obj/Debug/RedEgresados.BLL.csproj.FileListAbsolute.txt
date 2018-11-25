@@ -1,0 +1,9 @@
+C:\Users\z1\Documents\Proyectos\RedEgresados\RedEgresados.BLL\bin\Debug\RedEgresados.BLL.dll
+C:\Users\z1\Documents\Proyectos\RedEgresados\RedEgresados.BLL\bin\Debug\RedEgresados.BLL.pdb
+C:\Users\z1\Documents\Proyectos\RedEgresados\RedEgresados.BLL\bin\Debug\RedEgresados.DAL.dll
+C:\Users\z1\Documents\Proyectos\RedEgresados\RedEgresados.BLL\bin\Debug\EntityFramework.dll
+C:\Users\z1\Documents\Proyectos\RedEgresados\RedEgresados.BLL\bin\Debug\RedEgresados.DAL.pdb
+C:\Users\z1\Documents\Proyectos\RedEgresados\RedEgresados.BLL\bin\Debug\EntityFramework.xml
+C:\Users\z1\Documents\Proyectos\RedEgresados\RedEgresados.BLL\obj\Debug\RedEgresados.BLL.csprojResolveAssemblyReference.cache
+C:\Users\z1\Documents\Proyectos\RedEgresados\RedEgresados.BLL\obj\Debug\RedEgresados.BLL.dll
+C:\Users\z1\Documents\Proyectos\RedEgresados\RedEgresados.BLL\obj\Debug\RedEgresados.BLL.pdb
