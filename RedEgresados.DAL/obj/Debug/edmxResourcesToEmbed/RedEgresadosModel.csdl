@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RedEgresadosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Ex_Alumnos">
+    <Key>
+      <PropertyRef Name="Rol" />
+    </Key>
+    <Property Name="Rol" Type="Int32" Nullable="false" />
+    <Property Name="Sexo" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Name="Fecha_nac" Type="DateTime" Precision="3" />
+    <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Ano_Egreso" Type="Int32" />
+    <Property Name="Cargo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion_Cargo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Empresa" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Personas" Relationship="Self.FK_Ex_Alumnos_Personas" FromRole="Ex_Alumnos" ToRole="Personas" />
+  </EntityType>
+  <EntityType Name="Personas">
+    <Key>
+      <PropertyRef Name="Rol" />
+    </Key>
+    <Property Name="Rol" Type="Int32" Nullable="false" />
+    <Property Name="Nombres" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido_Paterno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido_Materno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Ex_Alumnos" Relationship="Self.FK_Ex_Alumnos_Personas" FromRole="Personas" ToRole="Ex_Alumnos" />
+    <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuarios_Personas" FromRole="Personas" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Tipos">
+    <Key>
+      <PropertyRef Name="TipoUsuario" />
+    </Key>
+    <Property Name="TipoUsuario" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuarios_Roles1" FromRole="Tipos" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="Rol" />
+    </Key>
+    <Property Name="Rol" Type="Int32" Nullable="false" />
+    <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="Int32" Nullable="false" />
+    <Property Name="TipoUsuario" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Personas" Relationship="Self.FK_Usuarios_Personas" FromRole="Usuarios" ToRole="Personas" />
+    <NavigationProperty Name="Tipos" Relationship="Self.FK_Usuarios_Roles1" FromRole="Usuarios" ToRole="Tipos" />
+  </EntityType>
+  <Association Name="FK_Ex_Alumnos_Personas">
+    <End Role="Personas" Type="Self.Personas" Multiplicity="1" />
+    <End Role="Ex_Alumnos" Type="Self.Ex_Alumnos" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Personas">
+        <PropertyRef Name="Rol" />
+      </Principal>
+      <Dependent Role="Ex_Alumnos">
+        <PropertyRef Name="Rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuarios_Personas">
+    <End Role="Personas" Type="Self.Personas" Multiplicity="1" />
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Personas">
+        <PropertyRef Name="Rol" />
+      </Principal>
+      <Dependent Role="Usuarios">
+        <PropertyRef Name="Rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuarios_Roles1">
+    <End Role="Tipos" Type="Self.Tipos" Multiplicity="1" />
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipos">
+        <PropertyRef Name="TipoUsuario" />
+      </Principal>
+      <Dependent Role="Usuarios">
+        <PropertyRef Name="TipoUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="redegresados_Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Ex_Alumnos" EntityType="Self.Ex_Alumnos" />
+    <EntitySet Name="Personas" EntityType="Self.Personas" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Tipos" EntityType="Self.Tipos" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+    <AssociationSet Name="FK_Ex_Alumnos_Personas" Association="Self.FK_Ex_Alumnos_Personas">
+      <End Role="Personas" EntitySet="Personas" />
+      <End Role="Ex_Alumnos" EntitySet="Ex_Alumnos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuarios_Personas" Association="Self.FK_Usuarios_Personas">
+      <End Role="Personas" EntitySet="Personas" />
+      <End Role="Usuarios" EntitySet="Usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuarios_Roles1" Association="Self.FK_Usuarios_Roles1">
+      <End Role="Tipos" EntitySet="Tipos" />
+      <End Role="Usuarios" EntitySet="Usuarios" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

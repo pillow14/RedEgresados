@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RedEgresadosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Ex_Alumnos">
+    <Key>
+      <PropertyRef Name="Rol" />
+    </Key>
+    <Property Name="Rol" Type="int" Nullable="false" />
+    <Property Name="Sexo" Type="char" MaxLength="20" />
+    <Property Name="Fecha_nac" Type="datetime" />
+    <Property Name="Direccion" Type="varchar(max)" />
+    <Property Name="Ano_Egreso" Type="int" />
+    <Property Name="Cargo" Type="varchar(max)" />
+    <Property Name="Descripcion_Cargo" Type="varchar(max)" />
+    <Property Name="Empresa" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Personas">
+    <Key>
+      <PropertyRef Name="Rol" />
+    </Key>
+    <Property Name="Rol" Type="int" Nullable="false" />
+    <Property Name="Nombres" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Apellido_Paterno" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Apellido_Materno" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Estado" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Tipos">
+    <Key>
+      <PropertyRef Name="TipoUsuario" />
+    </Key>
+    <Property Name="TipoUsuario" Type="int" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="Rol" />
+    </Key>
+    <Property Name="Rol" Type="int" Nullable="false" />
+    <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Estado" Type="int" Nullable="false" />
+    <Property Name="TipoUsuario" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Ex_Alumnos_Personas">
+    <End Role="Personas" Type="Self.Personas" Multiplicity="1" />
+    <End Role="Ex_Alumnos" Type="Self.Ex_Alumnos" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Personas">
+        <PropertyRef Name="Rol" />
+      </Principal>
+      <Dependent Role="Ex_Alumnos">
+        <PropertyRef Name="Rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuarios_Personas">
+    <End Role="Personas" Type="Self.Personas" Multiplicity="1" />
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Personas">
+        <PropertyRef Name="Rol" />
+      </Principal>
+      <Dependent Role="Usuarios">
+        <PropertyRef Name="Rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuarios_Roles1">
+    <End Role="Tipos" Type="Self.Tipos" Multiplicity="1" />
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipos">
+        <PropertyRef Name="TipoUsuario" />
+      </Principal>
+      <Dependent Role="Usuarios">
+        <PropertyRef Name="TipoUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RedEgresadosModelStoreContainer">
+    <EntitySet Name="Ex_Alumnos" EntityType="Self.Ex_Alumnos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Personas" EntityType="Self.Personas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tipos" EntityType="Self.Tipos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Ex_Alumnos_Personas" Association="Self.FK_Ex_Alumnos_Personas">
+      <End Role="Personas" EntitySet="Personas" />
+      <End Role="Ex_Alumnos" EntitySet="Ex_Alumnos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuarios_Personas" Association="Self.FK_Usuarios_Personas">
+      <End Role="Personas" EntitySet="Personas" />
+      <End Role="Usuarios" EntitySet="Usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuarios_Roles1" Association="Self.FK_Usuarios_Roles1">
+      <End Role="Tipos" EntitySet="Tipos" />
+      <End Role="Usuarios" EntitySet="Usuarios" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
